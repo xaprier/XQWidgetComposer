@@ -60,7 +60,20 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
 )
-
+  
+# Installation rules
 install(TARGETS ${PROJECT_NAME}
-    BUNDLE DESTINATION .
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+    EXPORT ${PROJECT_NAME}Targets
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+    RUNTIME DESTINATION .
+)
+
+if (NOT WIN32)
+    install(FILES ${HPP_FILES} DESTINATION include/${PROJECT_NAME})
+    install(EXPORT ${PROJECT_NAME}Targets
+        FILE ${PROJECT_NAME}Config.cmake
+        NAMESPACE ${PROJECT_NAME}::
+        DESTINATION lib/cmake/${PROJECT_NAME}
+    )
+endif()
