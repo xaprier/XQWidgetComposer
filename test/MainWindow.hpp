@@ -20,7 +20,7 @@ class MainWindow : public QMainWindow {  // NOLINT
     void _CreateConnections();
 
   private:
-    xaprier::qt::widgets::XQWidgetComposer *m_Composer;
+    xaprier::Qt::Widgets::XQWidgetComposer *m_Composer;
     QPushButton *m_NextButton, *m_PreviousButton;
     QGridLayout *m_Layout;
     QList<QPushButton *> m_Buttons;

@@ -33,11 +33,11 @@ void MainWindow::_CreateWidgets() {
     m_Layout->addWidget(m_NextButton, 0, 0);
     m_Layout->addWidget(m_PreviousButton, 1, 0);
 
-    m_Composer = new xaprier::qt::widgets::XQWidgetComposer(widgets, this);  // NOLINT
+    m_Composer = new xaprier::Qt::Widgets::XQWidgetComposer(widgets, this);  // NOLINT
     m_Layout->addWidget(m_Composer, 0, 1, 2, 1);
 }
 
 void MainWindow::_CreateConnections() {
-    QObject::connect(m_NextButton, &QPushButton::clicked, m_Composer, &xaprier::qt::widgets::XQWidgetComposer::sl_Next);
-    QObject::connect(m_PreviousButton, &QCheckBox::clicked, m_Composer, &xaprier::qt::widgets::XQWidgetComposer::sl_Previous);
+    QObject::connect(m_NextButton, &QPushButton::clicked, m_Composer, &xaprier::Qt::Widgets::XQWidgetComposer::sl_Next);
+    QObject::connect(m_PreviousButton, &QCheckBox::clicked, m_Composer, &xaprier::Qt::Widgets::XQWidgetComposer::sl_Previous);
 }

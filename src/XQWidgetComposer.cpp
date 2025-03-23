@@ -2,13 +2,13 @@
 
 #include <QtAlgorithms>
 
-namespace xaprier::qt::widgets {
+namespace xaprier::Qt::Widgets {
 
 XQWidgetComposer::XQWidgetComposer(QList<QWidget *> widgets, QWidget *parent) : QWidget(parent), m_Widgets(std::move(widgets)) {
     m_Layout = new QHBoxLayout(this);  // NOLINT
     m_Layout->setContentsMargins(0, 0, 0, 0);
     m_Layout->setSpacing(0);
-    m_Layout->setAlignment(Qt::AlignCenter);
+
     if (!m_Widgets.isEmpty()) {
         m_Active = 0;
         this->SetItem(m_Active);
@@ -110,4 +110,4 @@ void XQWidgetComposer::SetItem(int index) {
     m_Layout->addWidget(m_Widgets.at(index));
     this->update();
 }
-}  // namespace xaprier::qt::widgets
+}  // namespace xaprier::Qt::Widgets

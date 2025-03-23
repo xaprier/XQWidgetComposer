@@ -85,11 +85,11 @@ int main(int argc, char *argv[]) {
     QWidget *parentWidget = new QWidget();
     QHBoxLayout *layout = new QHBoxLayout(parentWidget);
     parentWidget->setLayout(layout);
-    xaprier::qt::widgets::XQWidgetComposer composer(widgets);
+    xaprier::Qt::Widgets::XQWidgetComposer composer(widgets);
     layout->addWidget(nextButton);
     layout->addWidget(&composer);
 
-    QObject::connect(nextButton, &QPushButton::clicked, &composer, &xaprier::qt::widgets::XQWidgetComposer::sl_Next);
+    QObject::connect(nextButton, &QPushButton::clicked, &composer, &xaprier::Qt::Widgets::XQWidgetComposer::sl_Next);
 
     parentWidget->resize(400, 300);
     parentWidget->show();
@@ -103,8 +103,8 @@ int main(int argc, char *argv[]) {
 Connect `XQWidgetComposer` slots to your signals to control widget navigation and display programmatically. Example:
 
 ```cpp
-connect(buttonNext, &QPushButton::clicked, &composer, &xaprier::qt::widgets::XQWidgetComposer::sl_Next);
-connect(buttonPrev, &QPushButton::clicked, &composer, &xaprier::qt::widgets::XQWidgetComposer::sl_Previous);
+connect(buttonNext, &QPushButton::clicked, &composer, &xaprier::Qt::Widgets::XQWidgetComposer::sl_Next);
+connect(buttonPrev, &QPushButton::clicked, &composer, &xaprier::Qt::Widgets::XQWidgetComposer::sl_Previous);
 ```
 
 ## Installation

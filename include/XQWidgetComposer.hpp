@@ -5,7 +5,7 @@
 #include <QList>
 #include <QWidget>
 
-namespace xaprier::qt::widgets {
+namespace xaprier::Qt::Widgets {
 
 class XQWidgetComposer : public QWidget {
     Q_OBJECT
@@ -46,6 +46,6 @@ class XQWidgetComposer : public QWidget {
     QHBoxLayout *m_Layout;
 };
 
-}  // namespace xaprier::qt::widgets
+}  // namespace xaprier::Qt::Widgets
 
 #endif  // XQWIDGETCOMPOSER_HPP
