@@ -1,6 +1,6 @@
 # XQWidgetComposer
 
-`XQWidgetComposer` is a Qt-based widget manager for composing and managing a list of `QWidget` objects. It allows you to navigate through a collection of widgets, displaying one at a time, and provides functionality for switching widgets programmatically or through signals and slots.
+`XQWidgetComposer` is a Qt-based widget manager for composing and managing a list of `QWidget` objects using QStackedWidget. It allows you to navigate through a collection of widgets, displaying one at a time, and provides functionality for switching widgets programmatically or through signals and slots.
 
 ## Features
 
@@ -56,10 +56,6 @@ XQWidgetComposer(QList<QWidget *> widgets, QWidget *parent = nullptr);
 
 - `void sl_Next();`
   - Slot to navigate to the next widget.
-
-### Private Methods
-- `void SetItem(int index);`
-  - Internally handles the layout update to show the specified widget.
 
 ## Example Usage
 

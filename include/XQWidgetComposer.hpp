@@ -3,6 +3,7 @@
 
 #include <QHBoxLayout>
 #include <QList>
+#include <QStackedWidget>
 #include <QWidget>
 
 namespace xaprier::Qt::Widgets {
@@ -19,7 +20,7 @@ class XQWidgetComposer : public QWidget {
     XQWidgetComposer &operator=(XQWidgetComposer &&other) noexcept = delete;
 
     [[nodiscard]] QHBoxLayout *GetLayout() const { return m_Layout; }
-    [[nodiscard]] int GetActive() const { return m_Active; }
+    [[nodiscard]] int GetActive() const { return m_StackedWidget->currentIndex(); }
     [[nodiscard]] QWidget *GetWidget(int index) const;
     [[nodiscard]] QList<QWidget *> GetWidgets() const;
 
@@ -37,12 +38,10 @@ class XQWidgetComposer : public QWidget {
     void sl_Previous();
     void sl_Next();
 
-  protected:
-    virtual void SetItem(int index);
-
   private:
     int m_Active;
     QList<QWidget *> m_Widgets;
+    QStackedWidget *m_StackedWidget;
     QHBoxLayout *m_Layout;
 };
 

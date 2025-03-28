@@ -5,15 +5,14 @@
 namespace xaprier::Qt::Widgets {
 
 XQWidgetComposer::XQWidgetComposer(QList<QWidget *> widgets, QWidget *parent) : QWidget(parent), m_Widgets(std::move(widgets)) {
-    m_Layout = new QHBoxLayout(this);  // NOLINT
+    m_StackedWidget = new QStackedWidget(this);
+    m_Layout = new QHBoxLayout(this);
+    m_Layout->addWidget(m_StackedWidget);
     m_Layout->setContentsMargins(0, 0, 0, 0);
     m_Layout->setSpacing(0);
-
-    if (!m_Widgets.isEmpty()) {
-        m_Active = 0;
-        this->SetItem(m_Active);
-    }
     this->setLayout(m_Layout);
+
+    SetWidgets(m_Widgets);
 }
 
 XQWidgetComposer::~XQWidgetComposer() {
@@ -23,59 +22,48 @@ XQWidgetComposer::~XQWidgetComposer() {
 }
 
 void XQWidgetComposer::SetWidgets(QList<QWidget *> widgets) {
-    this->m_Widgets = widgets;
-    if (!m_Widgets.isEmpty()) {
-        m_Active = 0;
-        this->SetItem(m_Active);
-    }
-}
+    if (m_StackedWidget) {
+        m_Layout->removeWidget(m_StackedWidget);
+        delete m_StackedWidget;
 
-void XQWidgetComposer::SetWidget(int index, QWidget *widget) {
-    if (index < 0 || index >= m_Widgets.size()) {
-        return;
+        m_StackedWidget = new QStackedWidget(this);
+        m_Layout->addWidget(m_StackedWidget);
     }
 
-    m_Widgets.replace(index, widget);
-    if (m_Active == index) {
-        this->SetItem(m_Active);
-    }
-}
-
-QWidget *XQWidgetComposer::GetWidget(int index) const {
-    if (index < 0 || index >= m_Widgets.size()) {
-        return nullptr;
+    for (QWidget *widget : widgets) {
+        m_StackedWidget->addWidget(widget);
     }
 
-    return m_Widgets.at(index);
+    if (!widgets.isEmpty()) {
+        m_StackedWidget->setCurrentIndex(0);
+    }
 }
 
 void XQWidgetComposer::Show(int index) {
-    if (index < 0 || index >= m_Widgets.size()) {
-        return;
+    if (index >= 0 && index < m_StackedWidget->count()) {
+        m_StackedWidget->setCurrentIndex(index);
     }
-
-    m_Active = index;
-    this->SetItem(m_Active);
 }
 
 void XQWidgetComposer::Show(QWidget *widget) {
-    int index = m_Widgets.indexOf(widget);
-    if (index == -1) {
-        return;
+    int index = m_StackedWidget->indexOf(widget);
+    if (index != -1) {
+        m_StackedWidget->setCurrentIndex(index);
     }
-
-    m_Active = index;
-    this->SetItem(m_Active);
 }
 
 void XQWidgetComposer::Previous() {
-    m_Active = (m_Active - 1 + m_Widgets.size()) % m_Widgets.size();
-    this->SetItem(m_Active);
+    int index = m_StackedWidget->currentIndex();
+    if (index > 0 && index < m_StackedWidget->count()) {
+        m_StackedWidget->setCurrentIndex(index - 1);
+    }
 }
 
 void XQWidgetComposer::Next() {
-    m_Active = (m_Active + 1) % m_Widgets.size();
-    this->SetItem(m_Active);
+    int index = m_StackedWidget->currentIndex();
+    if (index >= 0 && index < m_StackedWidget->count() - 1) {
+        m_StackedWidget->setCurrentIndex(index + 1);
+    }
 }
 
 void XQWidgetComposer::sl_ShowWidget(int index) {
@@ -94,20 +82,4 @@ void XQWidgetComposer::sl_Next() {
     this->Next();
 }
 
-void XQWidgetComposer::SetItem(int index) {
-    if (index < 0 || index >= m_Widgets.size()) {
-        return;
-    }
-
-    QLayoutItem *item;  // NOLINT
-    while ((item = m_Layout->takeAt(0)) != nullptr) {
-        if (item->widget()) {
-            item->widget()->setParent(nullptr);
-        }
-        delete item;  // NOLINT
-    }
-
-    m_Layout->addWidget(m_Widgets.at(index));
-    this->update();
-}
 }  // namespace xaprier::Qt::Widgets
